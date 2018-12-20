@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css">
+    <link rel="stylesheet" href="/static/styles/style.css">
+    <title>{{product.name}}</title>
+</head>
+
+<style>
+    img{
+        width: 30%;
+    }
+</style>
+
+<body>
+    <div class="nav">
+        <a class="button" href="/">Home</a>
+        <a class="button" href="/products">Back to products</a>
+        <a class="button" href="/cart">Go to cart</a>
+        <a class="button" href="/users/profile">Profile</a>
+    </div>
+
+    <h1 id="productName">{{product.name}}</h1>
+    <h3>{{product.description}}</h3>
+    <img src="{{product.image}}" alt="product_image">
+    <br>
+    <p>Unit Price: SR {{product.price}} </p>
+
+    <div>
+        <input type="number" name="quantity" id="quantity" value=1 min=1 max=99>
+        <button id="cart">Add to cart</button>
+    </div>
+
+    <label id="addedNotification"></label>
+    
+    <a href="/users/order"><button class="button-primary" style="background-color: #4484AD"> Check out</button></a>
+    {{#isAdmin}}
+    <form action="/products/{{product.id}}?_method=DELETE" method="POST">
+        <button>*Remove Product*</button>
+    </form>
+    {{/isAdmin}}
+    <!-- <a href="/users/cart">Go to cart</a> -->
+</body>
+
+<script>
+    var cartButton = document.getElementById("cart");
+    var productName = document.getElementById("productName");
+    var quantityInput = document.getElementById("quantity");
+    var $addedNotification = $("#addedNotification");
+    console.log($addedNotification[0]);
+
+    var theId;
+
+    // var cartObj = JSON.parse(sessionStorage.getItem("cart"));
+    // console.log(cartObj)
+
+    function cartLogic() {
+
+        var cartObj = JSON.parse(sessionStorage.getItem("cart"));
+        console.log(cartObj)
+
+        var theName = `{{product.name}}`;
+        var theId = parseInt(`{{product.id}}`);
+        // var thePrice = `{{{}}}`
+        var theQuantity = parseInt(quantityInput.value);
+        var thePrice = parseFloat(`{{product.price}}`);
+
+        if (cartObj) {
+            for (var i = 0; i < cartObj.cart.length; i++) {
+
+                if (cartObj.cart[i].productId == theId) {
+                    cartObj.cart[i].quantity = parseInt(cartObj.cart[i].quantity);
+                    theQuantity = parseInt(theQuantity);
+                    cartObj.cart[i].quantity = cartObj.cart[i].quantity + theQuantity;
+                    console.log("IN");
+                    sessionStorage.setItem("cart", JSON.stringify(cartObj))
+                    $addedNotification.html("Item added to cart.");
+                    return;
+                }
+            }
+        }
+
+        console.log(theQuantity);
+        console.log(theName);
+        console.log(theId);
+
+        if (cartObj == null) {
+            var cartObj = {
+                cart: []
+            }
+        }
+
+        var cartItem = {
+            productId: theId,
+            name: theName,
+            quantity: theQuantity,
+            price: thePrice
+        }
+
+        cartObj.cart.push(cartItem);
+
+        sessionStorage.setItem("cart", JSON.stringify(cartObj));
+        $addedNotification.html("Item added to cart.")
+
+        console.log(sessionStorage.getItem("cart"));
+
+        //from DB
+        // console.log(JSON.parse("{\"cart\":[{\"productId\":\"1\",\"quantity\":\"1\"}]}"))
+
+        // var test = JSON.parse(sessionStorage.getItem("cart"))
+        // console.log(test);
+    }
+
+    cartButton.addEventListener("click", cartLogic);
+</script>
+
+</html>

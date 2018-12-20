@@ -1,0 +1,41 @@
+body{
+    background-image: url("http://3.bp.blogspot.com/-LtNJvk1b3Yg/UASA4Sy8Y1I/AAAAAAAACIg/EoqjhewR0x8/s1600/light_blue_background_pattern.jpg");
+    margin: 0px;
+    text-align: center;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+a{
+    color: #4484AD;
+    margin: 10px;
+}
+th, td{
+    border-bottom: solid 1px black;
+}
+
+img{
+    width: 40%;
+}
+
+.nav>.button{
+    color:white;
+}
+
+table{
+    margin: 0 auto;
+}
+#homepage_h1{
+    margin-top: 40px;
+    font-family: cursive;
+}
+.container{
+    /* margin: 30px; */
+    padding: 50px;
+}
+
+.nav{
+    background-color: rgb(65, 131, 175);
+    /* position: fixed; */
+    width: 100%;
+    /* margin-top: 10px; */
+    margin-bottom: 20px;
+}

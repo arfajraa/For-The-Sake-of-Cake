@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Cart</title>
+    <script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css">
+  <link rel="stylesheet" href="/static/styles/style.css">
+</head>
+
+<body>
+    <div class="nav">
+            <a class="button" href="/">Home</a>
+            <a class="button" href="/products">Go to products</a>
+            <a class="button" href="/cart">Go to cart</a>
+            <a class="button" href="/users/profile">Profile</a>
+    </div>
+    <h2>Items in order</h2>
+    <table id="cart">
+        <th>Product Name</th>
+        <th>Quantity</th>
+        <th>Unit Price</th>
+    </table>
+    <p id="total"></p>
+    <h2>Payment</h2>
+    <form action="/users/orders" method="POST">
+        <label for="paymentName">
+            Name: <input type="text" name="paymentName" id="paymentName" value="placeholdername">
+        </label>
+        <label for="cardNumber">
+            Card Number: <input type="text" name="cardNumber" id="cardNumber" value="placeholdercard">
+        </label>
+        <label for="expirationDate">
+            Expiration Date: <input type="text" name="expirationDate" id="expirationDate" value="placeholderexpiration">
+        </label>
+        <br>
+        <br>
+        <button class="button-primary" style="background-color: #4484AD;" type="submit" id="order">Pay & Confirm Order</button>
+    </form>
+</body>
+
+<script>
+    var theTotal = 0;
+    if (sessionStorage.getItem("cart") != null) {
+
+        var cartObj = JSON.parse(sessionStorage.getItem("cart"));
+
+        var theTable = document.getElementById("cart");
+        var totalTag = document.getElementById("total");
+
+
+        for (var i = 0; i < cartObj.cart.length; i++) {
+            theTotal += cartObj.cart[i].quantity * cartObj.cart[i].price;
+
+            var row = document.createElement("TR");
+            theTable.appendChild(row);
+
+            var col1 = document.createElement("TD");
+            var textnode1 = document.createTextNode(`${cartObj.cart[i].name}`);
+            col1.appendChild(textnode1);
+            row.appendChild(col1);
+
+            var col2 = document.createElement("TD");
+            var textnode2 = document.createTextNode(`${cartObj.cart[i].quantity}`);
+            col2.appendChild(textnode2);
+            row.appendChild(col2);
+
+            var col3 = document.createElement("TD");
+            var textnode3 = document.createTextNode(`${cartObj.cart[i].price}`);
+            col3.appendChild(textnode3);
+            row.appendChild(col3);
+        }
+        totalTag.innerHTML += `Order total: SR${theTotal}`;
+    }
+
+    var paymentNameInput = document.getElementById("paymentName");
+    var cardNumberInput = document.getElementById("cardNumber");
+    var expirationInput = document.getElementById("expirationDate");
+
+    var paymentName = paymentNameInput.value;
+    var cardNumber = cardNumberInput.value;
+    var expirationDate = expirationInput.value;
+
+    console.log(paymentName, cardNumber, expirationDate)
+
+    function cleanData() {
+        var orderObject = JSON.parse(sessionStorage.getItem("cart"));
+        orderObject.total = theTotal;
+        orderObject.status = "In Progress";
+        // orderObject.user_id = 
+        orderObject.paymentName = paymentName;
+        orderObject.cardNumber = cardNumber;
+        orderObject.expirationDate = expirationDate;
+        // console.log(orderObject);
+        return orderObject;
+    }
+
+    console.log(cleanData());
+
+    var confirmButton = document.getElementById("order");
+    confirmButton.addEventListener("click", function(event){
+        event.preventDefault();
+        AJAX();
+    });
+
+    function AJAX() {
+        var url = 'http://localhost:3000/users/orders';
+        var data = cleanData();
+
+        // fetch(url, {
+        //     method: 'POST', // or 'PUT'
+        //     data: data,
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //         Accept: 'application/json'
+        //     }
+        // }).then(() => {
+        //     location.href = "/users/confirmation"
+        // })
+        //     // .then(response => console.log('Success:', JSON.stringify(response)))
+        //     // .catch(error => console.error('Error:', error));
+
+        $.ajax({
+            url: url,
+            method: 'POST',
+            data: data
+        })
+        .then(() => {
+            location.href = "/users/orders"
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
+
+
+</script>
+
+<style>
+    td {
+        border: 2px solid black;
+        padding: 5px;
+
+    }
+</style>
+
+</html>

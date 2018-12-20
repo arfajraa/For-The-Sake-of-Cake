@@ -1,0 +1,31 @@
+{
+  "name": "for-the-sake-of-cake",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arfajraa/For-The-Sake-of-Cake.git"
+  },
+  "author": "Raed Alarfaj",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/arfajraa/For-The-Sake-of-Cake/issues"
+  },
+  "homepage": "https://github.com/arfajraa/For-The-Sake-of-Cake#readme",
+  "dependencies": {
+    "bcrypt": "^3.0.2",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "express-session": "^1.15.6",
+    "method-override": "^3.0.0",
+    "morgan": "^1.9.1",
+    "mustache-express": "^1.2.8",
+    "nodemon": "^1.18.9",
+    "pg-promise": "^8.5.4",
+    "skeleton-css": "^2.0.4"
+  }
+}

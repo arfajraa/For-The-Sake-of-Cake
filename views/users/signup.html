@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css">
+    <link rel="stylesheet" href="/static/styles/style.css">
+    <title>Sign Up</title>
+</head>
+
+<body>
+    <div class="nav">
+        <a class="button" href="/">Home</a>
+        <a class="button" href="/products">Go to products</a>
+        <a class="button" href="/cart">Go to cart</a>
+    </div>
+    <form action="/users" method="POST">
+        <label for="username">
+            Username: <input type="text" name="username" id="username" required>
+        </label>
+        <br>
+        <label for="content">
+            Password: <input type="password" name="password" id="password" required>
+        </label>
+        <br>
+        <label for="fname">
+            First Name: <input type="text" name="fname" id="fname" required>
+        </label>
+        <br>
+        <label for="lname">
+            Last Name: <input type="text" name="lname" id="lname">
+        </label>
+        <br>
+        <label for="email">
+            Email: <input type="text" name="email" id="email" required>
+        </label>
+        <br>
+        <label for="phone_number">
+            Phone Number: <input type="text" name="phone_number" id="phone_number" required>
+        </label>
+        <br>
+        <button class="button-primary" type="submit">Register</button>
+    </form>
+</body>
+
+</html>
