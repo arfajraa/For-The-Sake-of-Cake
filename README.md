@@ -42,4 +42,4 @@
 - Jackie
 - Ghadeer
 - Sultan
-Special thanks for the support you provided throughout the project.
+## Special thanks for the support you provided throughout the project.
