@@ -25,7 +25,7 @@
 - Database relationships between the users and orders (1 user can have many orders), and between the order and orderItems (1 order can have many order items), and 1 orderItem can have 1 product with a specified quantity.
 
 # Installation instructions:
-- None. Just launch the provided Heroku link.
+- None. https://sake-of-cake.herokuapp.com/
 
 # Unsolved problems:
 - The user can clear their cart but can't remove/edit the quantity of a single item in the cart.
